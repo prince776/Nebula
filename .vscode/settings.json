@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "concepts": "cpp",
+    "variant": "cpp",
+    "iostream": "cpp"
+  },
+  "clangd.arguments": ["--query-driver=/opt/homebrew/bin/g++-11"]
+}
