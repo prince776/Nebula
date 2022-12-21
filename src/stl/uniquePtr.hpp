@@ -95,12 +95,14 @@ class UniquePtr<T[]> {
     T* ptr = nullptr;
 };
 
-template <std::regular T, typename... Args>
+template <typename T, typename... Args>
+    requires(!std::is_array_v<T>)
 UniquePtr<T> makeUnique(Args&&... args) {
     return UniquePtr<T>(new T(std::forward<Args>(args)...));
 }
 
 template <typename T>
+    requires(std::is_array_v<T>)
 UniquePtr<T> makeUnique(std::size_t num) {
     return UniquePtr<T>(new std::remove_extent_t<T>[num]());
 }

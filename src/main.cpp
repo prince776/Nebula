@@ -12,7 +12,6 @@ int main() {
         std::cout << "Val: " << *p << std::endl;
         p2[0] = 1;
         p2[1] = 2;
-        std::cout << "Val: " << p2[0] << ", " << p2[1] << std::endl;
+        std::cout << "Val2: " << p2[0] << ", " << p2[1] << std::endl;
     }
-    std::cout << "Test\n";
 }
