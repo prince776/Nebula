@@ -42,7 +42,7 @@ class Vector {
 
     void push_back(const T& val) {
         if (capacity == size) {
-            realloc(size, capacity * 2);
+            realloc(size, capacity * 2 + 1);
         }
         data[size++] = val;
     }

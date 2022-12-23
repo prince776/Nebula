@@ -4,5 +4,6 @@
     "variant": "cpp",
     "iostream": "cpp"
   },
-  "clangd.arguments": ["--query-driver=/opt/homebrew/bin/g++-11"]
+  "clangd.arguments": ["--query-driver=/opt/homebrew/bin/g++-11"],
+  "C_Cpp.intelliSenseEngine": "disabled"
 }
