@@ -18,6 +18,10 @@ class UniquePtr {
         return *this;
     }
 
+    // Delete copy ones
+    UniquePtr(const UniquePtr& lhs) = delete;
+    UniquePtr& operator=(const UniquePtr& lhs) = delete;
+
     T* release() noexcept {
         auto oldPtr = ptr;
         ptr = nullptr;
