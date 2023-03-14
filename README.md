@@ -1,3 +1,4 @@
-# cppbook
+# Nebula
 
-This repository contains random things I implement in C++, for my reference and/or practice.
+A cloud of random free pieces of code that I write.
+All in c++ for now.
