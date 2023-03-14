@@ -9,9 +9,8 @@
 #include "iterator.hpp"
 #include "uniquePtr.hpp"
 
-template <typename T>
-class Vector {
-   public:
+template <typename T> class Vector {
+  public:
     // Constructors
     Vector() = default;
     Vector(size_t size) : m_size(size), capacity(size) {
@@ -50,7 +49,7 @@ class Vector {
         if (capacity == m_size) {
             realloc(m_size, m_size * 2 + 1);
         }
-        data[m_size++] = move(val);
+        data[m_size++] = std::move(val);
     }
 
     void pop_back() noexcept {
@@ -75,7 +74,7 @@ class Vector {
         return (*this)[idx];
     }
 
-   private:
+  private:
     void fill(const T& val) {
         for (size_t i = 0; i < m_size; i++) {
             data[i] = val;
@@ -88,7 +87,7 @@ class Vector {
         UniquePtr<T[]> newData = makeUnique<T[]>(newCapacity);
         size_t minSize = std::min(m_size, newSize);
         for (size_t i = 0; i < minSize; i++) {
-            newData[i] = move(data[i]);
+            newData[i] = std::move(data[i]);
         }
         for (size_t i = minSize; i < newSize; i++) {
             newData[i] = T{};
@@ -99,7 +98,7 @@ class Vector {
         capacity = newCapacity;
     }
 
-   private:
+  private:
     UniquePtr<T[]> data;
     size_t m_size = 0, capacity = 0;
 };

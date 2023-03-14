@@ -2,7 +2,7 @@
 
 #include "stl/uniquePtr.hpp"
 
-int uniquePtr_test() {
+inline int uniquePtr_test() {
     UniquePtr<int> p = makeUnique<int>(123);
     UniquePtr<int[]> p2 = makeUnique<int[]>(5);
     std::cout << "Val: " << *p << std::endl;

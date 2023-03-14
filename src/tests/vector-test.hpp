@@ -2,10 +2,10 @@
 
 #include "stl/vector.hpp"
 
-int vector_test() {
+inline int vector_test() {
     Vector<int> a(5, 10);
     std::cout << "Iterating: ";
-    for (auto &x : a) {
+    for (auto& x : a) {
         std::cout << x << ", ";
         x++;
     }
