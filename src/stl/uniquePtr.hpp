@@ -1,8 +1,8 @@
 #pragma once
+#include <cassert>
 #include <concepts>
 #include <type_traits>
 #include <utility>
-
 template <typename T>
 class UniquePtr {
    public:
