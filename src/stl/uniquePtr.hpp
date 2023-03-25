@@ -150,7 +150,7 @@ UniquePtr<T> makeUnique(Alloc allocator, std::size_t num) {
     using baseT = std::remove_extent_t<T>;
     Blk blk = allocator.allocate(sizeof(baseT) * num);
     for (int i = 0; i < num; i++) {
-        T* ptr = ((baseT*)blk.ptr) + i;
+        baseT* ptr = ((baseT*)blk.ptr) + i;
         new (ptr) baseT();
     }
     return UniquePtr<T>(blk, allocator);

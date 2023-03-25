@@ -17,7 +17,7 @@ template <typename T, Allocator Alloc = Mallocator> class Vector {
     Vector(size_t size, Alloc allocator = {})
         : m_size(size), capacity(size), allocator(allocator) {
         allocator = Alloc{};
-        data = makeUnique<T[]>(capacity, allocator);
+        data = makeUnique<T[]>(allocator, capacity);
         fill(T{});
     }
     Vector(size_t size, const T& val, Alloc allocator = {})

@@ -1,4 +1,5 @@
 #include "allocator-test.hpp"
+#include "bitset-test.hpp"
 #include "uniquePtr-test.hpp"
 #include "vector-test.hpp"
 
@@ -14,5 +15,6 @@ int main() {
     RUN_TEST(vector_test)
     RUN_TEST(uniquePtr_test)
     RUN_TEST(allocator_test)
+    RUN_TEST(bitset_test)
     return 0;
 }
