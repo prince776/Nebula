@@ -62,5 +62,16 @@ inline int vector_test() {
         std::cout << x << " | ";
     }
     std::cout << "\n";
+
+    Vector<int> c = a;
+    for (int i = 0; i < c.size(); i++) {
+        ASSERT(c[i] == a[i]);
+    }
+
+    c = b;
+    for (int i = 0; i < c.size(); i++) {
+        ASSERT(c[i] == b[i]);
+    }
+
     return 0;
 }

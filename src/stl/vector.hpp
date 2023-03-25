@@ -16,18 +16,38 @@ template <typename T, Allocator Alloc = Mallocator> class Vector {
     Vector(Alloc allocator = {}) : allocator(allocator) {}
     Vector(size_t size, Alloc allocator = {})
         : m_size(size), capacity(size), allocator(allocator) {
-        allocator = Alloc{};
         data = makeUnique<T[]>(allocator, capacity);
         fill(T{});
     }
     Vector(size_t size, const T& val, Alloc allocator = {})
         : m_size(size), capacity(size), allocator(allocator) {
-        data = makeUnique<T[]>(capacity);
+        data = makeUnique<T[]>(allocator, capacity);
         fill(val);
+    }
+    Vector(const Vector<T, Alloc>& v) {
+        allocator = v.allocator;
+        m_size = v.size();
+        capacity = v.capacity;
+        data.~UniquePtr();
+        data = makeUnique<T[], Alloc>(allocator, capacity);
+        for (int i = 0; i < v.size(); i++) {
+            data[i] = v[i];
+        }
+    }
+    Vector& operator=(const Vector<T, Alloc>& v) {
+        allocator = v.allocator;
+        m_size = v.size();
+        capacity = v.capacity;
+        data.~UniquePtr();
+        data = makeUnique<T[], Alloc>(allocator, capacity);
+        for (int i = 0; i < v.size(); i++) {
+            data[i] = v[i];
+        }
+        return *this;
     }
     Vector(std::initializer_list<T> ini, Alloc allocator = {})
         : m_size(ini.size()), capacity(ini.size()), allocator(allocator) {
-        data = makeUnique<T[]>(capacity);
+        data = makeUnique<T[]>(allocator, capacity);
         auto it = begin();
         for (const auto& val : ini) {
             *it = val;
@@ -69,6 +89,12 @@ template <typename T, Allocator Alloc = Mallocator> class Vector {
     ForwardIterator<T> end() noexcept {
         return ForwardIterator(&data[0] + m_size);
     }
+    const ForwardIterator<T> begin() const noexcept {
+        return ForwardIterator(&data[0]);
+    }
+    const ForwardIterator<T> end() const noexcept {
+        return ForwardIterator(&data[0] + m_size);
+    }
 
     // Random access
     T& operator[](size_t idx) noexcept { return data[idx]; }
@@ -77,6 +103,7 @@ template <typename T, Allocator Alloc = Mallocator> class Vector {
         assert(idx >= m_size);
         return (*this)[idx];
     }
+    size_t size() const { return m_size; }
 
   private:
     void fill(const T& val) {
