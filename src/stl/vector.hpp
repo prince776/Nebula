@@ -105,7 +105,22 @@ template <typename T, Allocator Alloc = Mallocator> class Vector {
     }
     size_t size() const { return m_size; }
 
-  private:
+    bool operator==(const Vector& other) const noexcept {
+        if (size() != other.size()) {
+            return false;
+        }
+        for (int i = 0; i < size(); i++) {
+            if ((*this)[i] != other[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool operator!=(const Vector& other) const noexcept {
+        return !(*this == other);
+    }
+
+  protected:
     void fill(const T& val) {
         for (size_t i = 0; i < m_size; i++) {
             data[i] = val;
@@ -129,7 +144,7 @@ template <typename T, Allocator Alloc = Mallocator> class Vector {
         capacity = newCapacity;
     }
 
-  private:
+  protected:
     UniquePtr<T[]> data;
     Alloc allocator;
     size_t m_size = 0, capacity = 0;
