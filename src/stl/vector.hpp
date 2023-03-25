@@ -6,23 +6,27 @@
 #include <initializer_list>
 #include <utility>
 
+#include "allocator/allocator.hpp"
 #include "iterator.hpp"
 #include "uniquePtr.hpp"
 
-template <typename T> class Vector {
+template <typename T, Allocator Alloc = Mallocator> class Vector {
   public:
     // Constructors
-    Vector() = default;
-    Vector(size_t size) : m_size(size), capacity(size) {
-        data = makeUnique<T[]>(capacity);
+    Vector(Alloc allocator = {}) : allocator(allocator) {}
+    Vector(size_t size, Alloc allocator = {})
+        : m_size(size), capacity(size), allocator(allocator) {
+        allocator = Alloc{};
+        data = makeUnique<T[]>(capacity, allocator);
         fill(T{});
     }
-    Vector(size_t size, const T& val) : m_size(size), capacity(size) {
+    Vector(size_t size, const T& val, Alloc allocator = {})
+        : m_size(size), capacity(size), allocator(allocator) {
         data = makeUnique<T[]>(capacity);
         fill(val);
     }
-    Vector(std::initializer_list<T> ini)
-        : m_size(ini.size()), capacity(ini.size()) {
+    Vector(std::initializer_list<T> ini, Alloc allocator = {})
+        : m_size(ini.size()), capacity(ini.size()), allocator(allocator) {
         data = makeUnique<T[]>(capacity);
         auto it = begin();
         for (const auto& val : ini) {
@@ -100,5 +104,6 @@ template <typename T> class Vector {
 
   private:
     UniquePtr<T[]> data;
+    Alloc allocator;
     size_t m_size = 0, capacity = 0;
 };

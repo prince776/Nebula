@@ -63,10 +63,10 @@ template <Allocator P, Allocator F> class FallbackAllocator {
     F fallbackAlloc;
 };
 
-// Unaligned allocator for now.
 using FallbackAllocatorTest =
     AllocatorTester<FallbackAllocator<MockAllocator, MockAllocator>>;
 
+// Unaligned allocator for now.
 template <size_t MaxSize> class StackAllocator {
   public:
     StackAllocator() = default;
@@ -105,6 +105,7 @@ template <size_t MaxSize> class StackAllocator {
 
 using StackAllocatorTest = AllocatorTester<StackAllocator<0>>;
 
+// Unaligned allocator for now.
 class Mallocator {
   public:
     Mallocator() = default;
